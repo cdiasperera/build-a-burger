@@ -39,6 +39,9 @@ const getBurgerQueue = (ingredients) => {
   // build the burger
   const queue = []
   for (const type of ingredientsOrder) {
+    console.log(ingredients)
+    console.log(type)
+    console.log(ingredients.keys)
     for (let i = 0; i < ingredients[type]; i++) {
       queue.push(type)
       numIngredients++
