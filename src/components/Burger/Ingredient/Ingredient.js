@@ -33,7 +33,7 @@ const getIngredientFromType = (type) => {
   return ingredient
 }
 
-const ingredients = {
+const ingredientList = {
   breadTop: 'BreadTop',
   breadBottom: 'BreadBottom',
   meat: 'Meat',
@@ -42,9 +42,18 @@ const ingredients = {
   bacon: 'Bacon'
 }
 
+const ingredientsOrder = [
+  ingredientList.breadTop,
+  ingredientList.salad,
+  ingredientList.cheese,
+  ingredientList.bacon,
+  ingredientList.meat,
+  ingredientList.breadBottom
+]
+
 ingredient.propTypes = {
   type: PropTypes.string.isRequired
 }
 
 export default ingredient
-export { ingredients }
+export { ingredientList, ingredientsOrder }
