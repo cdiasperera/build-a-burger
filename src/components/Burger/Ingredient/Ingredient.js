@@ -33,7 +33,7 @@ const getIngredientFromType = (type) => {
   return ingredient
 }
 
-const ingredientList = {
+const INGREDIENT_LIST = {
   breadTop: 'BreadTop',
   breadBottom: 'BreadBottom',
   meat: 'Meat',
@@ -42,18 +42,26 @@ const ingredientList = {
   bacon: 'Bacon'
 }
 
-const ingredientsOrder = [
-  ingredientList.breadTop,
-  ingredientList.salad,
-  ingredientList.cheese,
-  ingredientList.bacon,
-  ingredientList.meat,
-  ingredientList.breadBottom
+const INGREDIENTS_ORDER = [
+  INGREDIENT_LIST.breadTop,
+  INGREDIENT_LIST.salad,
+  INGREDIENT_LIST.cheese,
+  INGREDIENT_LIST.bacon,
+  INGREDIENT_LIST.meat,
+  INGREDIENT_LIST.breadBottom
 ]
+
+const INGREDIENTS_PRICE = {
+  base: 0
+}
+INGREDIENTS_PRICE[INGREDIENT_LIST.salad] = 0.5
+INGREDIENTS_PRICE[INGREDIENT_LIST.cheese] = 0.4
+INGREDIENTS_PRICE[INGREDIENT_LIST.bacon] = 0.7
+INGREDIENTS_PRICE[INGREDIENT_LIST.meat] = 1.3
 
 ingredient.propTypes = {
   type: PropTypes.string.isRequired
 }
 
 export default ingredient
-export { ingredientList, ingredientsOrder }
+export { INGREDIENT_LIST, INGREDIENTS_ORDER, INGREDIENTS_PRICE }

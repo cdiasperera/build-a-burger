@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import shortId from 'shortid'
 
-import Ingredient, { ingredientsOrder }
+import Ingredient, { INGREDIENTS_ORDER }
   from './Ingredient/Ingredient'
 
 import classes from './Burger.module.css'
@@ -38,10 +38,7 @@ const getBurgerQueue = (ingredients) => {
   // For each type of ingredient, add it to a queue, which will then be used to
   // build the burger
   const queue = []
-  for (const type of ingredientsOrder) {
-    console.log(ingredients)
-    console.log(type)
-    console.log(ingredients.keys)
+  for (const type of INGREDIENTS_ORDER) {
     for (let i = 0; i < ingredients[type]; i++) {
       queue.push(type)
       numIngredients++

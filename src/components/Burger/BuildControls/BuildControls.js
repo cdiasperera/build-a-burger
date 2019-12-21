@@ -1,12 +1,14 @@
 import React from 'react'
 
 import BuildControl from './BuildControl/BuildControl'
-import { ingredientList } from '../Ingredient/Ingredient'
+import { INGREDIENT_LIST } from '../Ingredient/Ingredient'
 
 import classes from './BuildControls.module.css'
 
 const buildControls = (props) => {
-  const controls = createControls(ingredientList, props.adjustIngredients)
+  const controls = createControls(INGREDIENT_LIST,
+    props.adjustIngredients,
+    props.disabledDecrements)
 
   return (
     <div className={classes.BuildControls}>
@@ -15,13 +17,16 @@ const buildControls = (props) => {
   )
 }
 
-const createControls = (ingredientList, adjustmentHandler) => {
+const createControls = (INGREDIENT_LIST,
+  adjustmentHandler,
+  disabledDecrements) => {
   const controls = []
-  for (const ingredient in ingredientList) {
+  for (const ingredient in INGREDIENT_LIST) {
     if (ingredient !== 'breadTop' && ingredient !== 'breadBottom') {
-      const label = ingredientList[ingredient]
+      const label = INGREDIENT_LIST[ingredient]
       controls.push(
         <BuildControl
+          disabledDecrement={disabledDecrements.includes(label)}
           label={label}
           key={ingredient}
           handleAdjustment={adjustmentHandler.bind(this, ingredient)}

@@ -5,6 +5,11 @@ const INCREMENT = 1
 const DECREMENT = -1
 
 const buildControl = (props) => {
+  let disabledDecrement = false
+  if (props.disabledDecrement) {
+    disabledDecrement = true
+  }
+
   return (
     <div className={classes.BuildControl}>
       <div className={classes.Label}>
@@ -13,6 +18,7 @@ const buildControl = (props) => {
       <button
         onClick={props.handleAdjustment.bind(this, DECREMENT)}
         className={classes.Less}
+        disabled={disabledDecrement}
       >
           -
       </button>
