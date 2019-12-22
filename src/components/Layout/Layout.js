@@ -1,14 +1,14 @@
 import React from 'react'
 
+import Toolbar from '../Navigation/Toolbar/Toolbar'
+
 import classes from './Layout.module.css'
 
 const layout = ({ children }) => {
   return (
     <>
-      <div className={classes.toolbar}>
-        Toolbar, SideDrawer, Backdrop
-      </div>
-      <main>
+      <Toolbar />
+      <main className={classes.Content}>
         {children}
       </main>
     </>
