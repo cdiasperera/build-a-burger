@@ -13,7 +13,7 @@ const toolbar = ({ menu, logo, nav }) => {
       <div className={classes.Logo}>
         <Logo />
       </div>
-      <nav>
+      <nav className={classes.DesktopOnly}>
         <NavItems />
       </nav>
     </header>
