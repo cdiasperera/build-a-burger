@@ -27,8 +27,13 @@ class BurgerBuilder extends Component {
 
     if (ingredients[INGREDIENT_LIST[type]] < 1) {
       ingredients[INGREDIENT_LIST[type]] = 0
-    } else {
-      newPrice += adjustType * INGREDIENTS_PRICE[INGREDIENT_LIST[type]]
+    }
+
+    // Determine the new price. Convert it to two decimal places
+    newPrice += adjustType * INGREDIENTS_PRICE[INGREDIENT_LIST[type]]
+    // Bounds check to make sure disabled button result is not subverted
+    if (ingredients[INGREDIENT_LIST[type]] < 0) {
+      newPrice = this.state.price
     }
 
     const newState = {
@@ -39,14 +44,16 @@ class BurgerBuilder extends Component {
     this.setState(newState)
   }
 
-  a = 1
-
   render = () => {
     const disabledDecrements = []
-
+    let disableCheckout = true
     for (const key in this.state.ingredients) {
       if (this.state.ingredients[key] <= 0) {
         disabledDecrements.push(key)
+      } else {
+        // We have found one ingredient that has been added, so we can enable
+        // the checkout button
+        disableCheckout = false
       }
     }
 
@@ -56,6 +63,8 @@ class BurgerBuilder extends Component {
         <BuildControls
           adjustIngredients={this.adjustIngredients}
           disabledDecrements={disabledDecrements}
+          price={this.state.price}
+          disableCheckout={disableCheckout}
         />
       </>
     )
