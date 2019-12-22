@@ -3,8 +3,12 @@ import React, { Component } from 'react'
 import Burger from '../../components/Burger/Burger'
 import { INGREDIENT_LIST, INGREDIENTS_PRICE } from
   '../../components/Burger/Ingredient/Ingredient'
+
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
+import Modal from '../../components/UI/Modal/Modal'
+
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 class BurgerBuilder extends Component {
   constructor (props) {
     super(props)
@@ -16,7 +20,8 @@ class BurgerBuilder extends Component {
 
     this.state = {
       ingredients: ingredients,
-      price: INGREDIENTS_PRICE.base
+      price: INGREDIENTS_PRICE.base,
+      checkingOut: false
     }
   }
 
@@ -44,6 +49,10 @@ class BurgerBuilder extends Component {
     this.setState(newState)
   }
 
+  checkOut = () => {
+    this.setState({ checkingOut: true })
+  }
+
   render = () => {
     const disabledDecrements = []
     let disableCheckout = true
@@ -59,12 +68,19 @@ class BurgerBuilder extends Component {
 
     return (
       <>
+        <Modal show={this.state.checkingOut}>
+          <OrderSummary
+            ingredients={this.state.ingredients}
+            price={this.state.price}
+          />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           adjustIngredients={this.adjustIngredients}
           disabledDecrements={disabledDecrements}
           price={this.state.price}
           disableCheckout={disableCheckout}
+          handleCheckOut={this.checkOut}
         />
       </>
     )

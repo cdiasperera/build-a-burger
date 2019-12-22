@@ -16,6 +16,7 @@ const buildControls = (props) => {
       {controls}
       <button
         className={classes.OrderButton}
+        onClick={props.handleCheckOut}
         disabled={props.disableCheckout}
       >
       CHECKOUT
