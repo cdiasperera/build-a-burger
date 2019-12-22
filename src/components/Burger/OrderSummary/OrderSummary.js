@@ -1,6 +1,8 @@
 import React from 'react'
 
-const summary = ({ ingredients, price }) => {
+import Button from '../../UI/Button/Button'
+
+const summary = ({ ingredients, price, exitCheckout }) => {
   const ingredientSummary = []
 
   for (const ingredient in ingredients) {
@@ -21,8 +23,9 @@ const summary = ({ ingredients, price }) => {
         {ingredientSummary}
       </ul>
       <hr />
-      <p>Total: {price.toFixed(2)}</p>
-      <button> Continue to checkout?</button>
+      <p><strong>Total: {price.toFixed(2)}</strong></p>
+      <Button success> Continue to checkout?</Button>
+      <Button onClick={exitCheckout} success={false}> Cancel </Button>
     </>
   )
 }

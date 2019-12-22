@@ -80,6 +80,7 @@ class BurgerBuilder extends Component {
           <OrderSummary
             ingredients={this.state.ingredients}
             price={this.state.price}
+            exitCheckout={this.exitCheckout}
           />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
