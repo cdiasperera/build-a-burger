@@ -25,3 +25,9 @@
 .Close {
   transform: translateX(-100%);
 }
+
+.Logo {
+  height: 11%;
+  width: 30%;
+  background-color: white;
+}

@@ -10,7 +10,9 @@ const toolbar = ({ menu, logo, nav }) => {
   return (
     <header className={classes.Toolbar}>
       <div>MENU</div>
-      <Logo />
+      <div className={classes.Logo}>
+        <Logo />
+      </div>
       <nav>
         <NavItems />
       </nav>
