@@ -5,19 +5,25 @@ import { INGREDIENT_LIST } from '../Ingredient/Ingredient'
 
 import classes from './BuildControls.module.css'
 
-const buildControls = (props) => {
+const buildControls = ({
+  adjustIngredients,
+  disabledDecrements,
+  price,
+  handleCheckOut,
+  disableCheckout
+}) => {
   const controls = createControls(INGREDIENT_LIST,
-    props.adjustIngredients,
-    props.disabledDecrements)
+    adjustIngredients,
+    disabledDecrements)
 
   return (
     <div className={classes.BuildControls}>
-      <strong><p>Current Price: {props.price.toFixed(2)}</p></strong>
+      <strong><p>Current Price: {price.toFixed(2)}</p></strong>
       {controls}
       <button
         className={classes.OrderButton}
-        onClick={props.handleCheckOut}
-        disabled={props.disableCheckout}
+        onClick={handleCheckOut}
+        disabled={disableCheckout}
       >
       CHECKOUT
       </button>

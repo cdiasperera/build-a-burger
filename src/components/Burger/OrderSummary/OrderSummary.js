@@ -1,10 +1,10 @@
 import React from 'react'
 
-const summary = (props) => {
+const summary = ({ ingredients, price }) => {
   const ingredientSummary = []
 
-  for (const ingredient in props.ingredients) {
-    const amount = props.ingredients[ingredient]
+  for (const ingredient in ingredients) {
+    const amount = ingredients[ingredient]
     if (amount > 0) {
       ingredientSummary.push(
         <li key={ingredient}>
@@ -21,7 +21,7 @@ const summary = (props) => {
         {ingredientSummary}
       </ul>
       <hr />
-      <p>Total: {props.price.toFixed(2)}</p>
+      <p>Total: {price.toFixed(2)}</p>
       <button> Continue to checkout?</button>
     </>
   )

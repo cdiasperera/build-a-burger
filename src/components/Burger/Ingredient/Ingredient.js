@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import classes from './Ingredient.module.css'
 
-const ingredient = (props) => {
-  const ingredient = getIngredientFromType(props.type)
+const ingredient = ({ type }) => {
+  const ingredient = getIngredientFromType(type)
   return (
     ingredient
   )

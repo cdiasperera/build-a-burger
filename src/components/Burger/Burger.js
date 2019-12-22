@@ -9,8 +9,8 @@ import classes from './Burger.module.css'
 
 const START_MESSAGE = 'Please start adding ingredients!'
 
-const burger = (props) => {
-  const { queue, message } = getBurgerQueue(props.ingredients)
+const burger = ({ ingredients }) => {
+  const { queue, message } = getBurgerQueue(ingredients)
 
   const burger = queue.map((ingredient) => {
     return (
