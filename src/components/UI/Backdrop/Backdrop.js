@@ -2,9 +2,9 @@ import React from 'react'
 
 import classes from './Backdrop.module.css'
 
-const backdrop = ({ show }) => {
+const backdrop = ({ show, removeBackdrop }) => {
   return (
-    show ? <div className={classes} /> : null
+    show ? <div onClick={removeBackdrop} className={classes.Backdrop} /> : null
   )
 }
 

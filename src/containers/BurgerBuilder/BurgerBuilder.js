@@ -53,6 +53,11 @@ class BurgerBuilder extends Component {
     this.setState({ checkingOut: true })
   }
 
+  exitCheckout = () => {
+    console.log('whatup')
+    this.setState({ checkingOut: false })
+  }
+
   render = () => {
     const disabledDecrements = []
     let disableCheckout = true
@@ -68,7 +73,10 @@ class BurgerBuilder extends Component {
 
     return (
       <>
-        <Modal show={this.state.checkingOut}>
+        <Modal
+          show={this.state.checkingOut}
+          exitCheckout={this.exitCheckout}
+        >
           <OrderSummary
             ingredients={this.state.ingredients}
             price={this.state.price}
