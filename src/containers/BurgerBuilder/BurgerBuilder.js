@@ -54,7 +54,6 @@ class BurgerBuilder extends Component {
   }
 
   exitCheckout = () => {
-    console.log('whatup')
     this.setState({ checkingOut: false })
   }
 
