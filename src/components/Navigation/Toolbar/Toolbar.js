@@ -3,13 +3,13 @@ import React from 'react'
 import Logo from '../../Logo/Logo'
 
 import NavItems from '../NavItems/NavItems'
-
+import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle'
 import classes from './Toolbar.module.css'
 
-const toolbar = ({ menu, logo, nav }) => {
+const toolbar = ({ menu, logo, nav, toggleDrawer }) => {
   return (
     <header className={classes.Toolbar}>
-      <div>MENU</div>
+      <DrawerToggle toggle={toggleDrawer} />
       <div className={classes.Logo}>
         <Logo />
       </div>
