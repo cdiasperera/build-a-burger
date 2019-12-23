@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import classes from './Ingredient.module.css'
 
-const ingredient = ({ type }) => {
+const Ingredient = ({ type }) => {
   const ingredient = getIngredientFromType(type)
   return (
     ingredient
@@ -59,9 +59,9 @@ INGREDIENTS_PRICE[INGREDIENT_LIST.cheese] = 0.4
 INGREDIENTS_PRICE[INGREDIENT_LIST.bacon] = 0.7
 INGREDIENTS_PRICE[INGREDIENT_LIST.meat] = 1.3
 
-ingredient.propTypes = {
+Ingredient.propTypes = {
   type: PropTypes.string.isRequired
 }
 
-export default ingredient
+export default Ingredient
 export { INGREDIENT_LIST, INGREDIENTS_ORDER, INGREDIENTS_PRICE }

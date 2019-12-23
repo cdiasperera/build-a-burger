@@ -3,7 +3,8 @@ import React from 'react'
 import NavItem from './NavItem/NavItem'
 
 import classes from './NavItems.module.css'
-const navItems = () => {
+
+const NavItems = () => {
   return (
     <ul className={classes.NavItems}>
       <NavItem link='/' active>Burger Builder</NavItem>
@@ -12,4 +13,4 @@ const navItems = () => {
   )
 }
 
-export default navItems
+export default NavItems

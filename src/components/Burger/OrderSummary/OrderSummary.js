@@ -2,7 +2,7 @@ import React from 'react'
 
 import Button from '../../UI/Button/Button'
 
-const summary = ({ ingredients, price, exitCheckout }) => {
+const Summary = ({ ingredients, price, exitCheckout }) => {
   const ingredientSummary = []
 
   for (const ingredient in ingredients) {
@@ -15,6 +15,7 @@ const summary = ({ ingredients, price, exitCheckout }) => {
       )
     }
   }
+
   return (
     <>
       <h3>Your Order</h3>
@@ -30,4 +31,4 @@ const summary = ({ ingredients, price, exitCheckout }) => {
   )
 }
 
-export default summary
+export default Summary

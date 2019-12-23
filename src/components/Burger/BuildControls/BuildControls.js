@@ -5,7 +5,7 @@ import { INGREDIENT_LIST } from '../Ingredient/Ingredient'
 
 import classes from './BuildControls.module.css'
 
-const buildControls = ({
+const BuildControls = ({
   adjustIngredients,
   disabledDecrements,
   price,
@@ -52,4 +52,4 @@ const createControls = (INGREDIENT_LIST,
   return controls
 }
 
-export default buildControls
+export default BuildControls

@@ -4,7 +4,7 @@ import classes from './BuildControl.module.css'
 const INCREMENT = 1
 const DECREMENT = -1
 
-const buildControl = ({ disabledDecrement, label, handleAdjustment }) => {
+const BuildControl = ({ disabledDecrement, label, handleAdjustment }) => {
   return (
     <div className={classes.BuildControl}>
       <div className={classes.Label}>
@@ -27,4 +27,4 @@ const buildControl = ({ disabledDecrement, label, handleAdjustment }) => {
   )
 }
 
-export default buildControl
+export default BuildControl

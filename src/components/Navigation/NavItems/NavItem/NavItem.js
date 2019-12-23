@@ -1,7 +1,7 @@
 import React from 'react'
 
 import classes from './NavItem.module.css'
-const navItem = ({ link, children, active }) => {
+const NavItem = ({ link, children, active }) => {
   return (
     <li className={classes.NavItem}>
       <a
@@ -14,4 +14,4 @@ const navItem = ({ link, children, active }) => {
   )
 }
 
-export default navItem
+export default NavItem

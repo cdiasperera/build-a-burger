@@ -9,7 +9,7 @@ import classes from './Burger.module.css'
 
 const START_MESSAGE = 'Please start adding ingredients!'
 
-const burger = ({ ingredients }) => {
+const Burger = ({ ingredients }) => {
   const { queue, message } = getBurgerQueue(ingredients)
 
   const burger = queue.map((ingredient) => {
@@ -59,14 +59,14 @@ const getBurgerQueue = (ingredients) => {
   return { queue, message }
 }
 
-burger.propTypes = {
+Burger.propTypes = {
   ingredients: PropTypes.object.isRequired
 }
 
-burger.defaultProps = {
+Burger.defaultProps = {
   ingredients: {
     meat: 1
   }
 }
 
-export default burger
+export default Burger

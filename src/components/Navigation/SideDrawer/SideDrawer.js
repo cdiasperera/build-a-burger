@@ -5,7 +5,7 @@ import Logo from '../../Logo/Logo'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 import classes from './SideDrawer.module.css'
 
-const sideDrawer = ({ show, toggle }) => {
+const SideDrawer = ({ show, toggle }) => {
   // CSS class that positions the sideDrawer out of frame (or not)
   let locationClass = null
   if (show) {
@@ -29,4 +29,4 @@ const sideDrawer = ({ show, toggle }) => {
   )
 }
 
-export default sideDrawer
+export default SideDrawer

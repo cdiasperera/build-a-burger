@@ -6,7 +6,7 @@ import NavItems from '../NavItems/NavItems'
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle'
 import classes from './Toolbar.module.css'
 
-const toolbar = ({ menu, logo, nav, toggleDrawer }) => {
+const Toolbar = ({ menu, logo, nav, toggleDrawer }) => {
   return (
     <header className={classes.Toolbar}>
       <DrawerToggle toggle={toggleDrawer} />
@@ -20,4 +20,4 @@ const toolbar = ({ menu, logo, nav, toggleDrawer }) => {
   )
 }
 
-export default toolbar
+export default Toolbar
