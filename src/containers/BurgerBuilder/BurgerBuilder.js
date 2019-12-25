@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
+import axios from '../../axios'
 
 import Burger from '../../components/Burger/Burger'
 import { INGREDIENT_LIST, INGREDIENTS_PRICE } from
   '../../components/Burger/Ingredient/Ingredient'
-
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
-
 import Modal from '../../components/UI/Modal/Modal'
-
+import Spinner from '../../components/UI/Spinner/Spinner'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 class BurgerBuilder extends Component {
   constructor (props) {
@@ -21,7 +20,8 @@ class BurgerBuilder extends Component {
     this.state = {
       ingredients: ingredients,
       price: INGREDIENTS_PRICE.base,
-      checkingOut: false
+      checkingOut: false,
+      loading: false
     }
   }
 
@@ -57,6 +57,20 @@ class BurgerBuilder extends Component {
     this.setState({ checkingOut: false })
   }
 
+  continueCheckout = async () => {
+    const order = { ...this.state.ingredients, ...this.state.price }
+    try {
+      const sendOrder = axios.post('/orders.json', order)
+      this.setState({ loading: true })
+
+      await sendOrder
+      this.setState({ loading: false, checkingOut: false })
+    } catch (err) {
+      console.log(err)
+      this.setState({ loading: false, checkingOut: false })
+    }
+  }
+
   render = () => {
     const disabledDecrements = []
     let disableCheckout = true
@@ -70,17 +84,27 @@ class BurgerBuilder extends Component {
       }
     }
 
+    let modalContent = null
+    if (this.state.loading) {
+      modalContent = <Spinner />
+    } else {
+      modalContent = (
+        <OrderSummary
+          ingredients={this.state.ingredients}
+          price={this.state.price}
+          exitCheckout={this.exitCheckout}
+          continueCheckout={this.continueCheckout}
+        />
+      )
+    }
+
     return (
       <>
         <Modal
           show={this.state.checkingOut}
           exitCheckout={this.exitCheckout}
         >
-          <OrderSummary
-            ingredients={this.state.ingredients}
-            price={this.state.price}
-            exitCheckout={this.exitCheckout}
-          />
+          {modalContent}
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls

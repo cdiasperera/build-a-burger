@@ -2,7 +2,7 @@ import React from 'react'
 
 import Button from '../../UI/Button/Button'
 
-const Summary = ({ ingredients, price, exitCheckout }) => {
+const Summary = ({ ingredients, price, exitCheckout, continueCheckout }) => {
   const ingredientSummary = []
 
   for (const ingredient in ingredients) {
@@ -25,7 +25,7 @@ const Summary = ({ ingredients, price, exitCheckout }) => {
       </ul>
       <hr />
       <p><strong>Total: {price.toFixed(2)}</strong></p>
-      <Button success> Continue to checkout?</Button>
+      <Button onClick={continueCheckout} success> Continue to checkout?</Button>
       <Button onClick={exitCheckout} success={false}> Cancel </Button>
     </>
   )

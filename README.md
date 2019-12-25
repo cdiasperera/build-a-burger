@@ -1,3 +1,6 @@
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+
 ## The Build-A-Burger App
 This web app was created, by following the [React - The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/), by Maximilian Schwarzmüller.
 
