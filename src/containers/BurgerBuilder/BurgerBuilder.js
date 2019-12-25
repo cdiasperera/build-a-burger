@@ -13,22 +13,26 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 class BurgerBuilder extends Component {
   constructor (props) {
     super(props)
-    const ingredients = {}
-    ingredients[INGREDIENT_LIST.salad] = 0
-    ingredients[INGREDIENT_LIST.meat] = 0
-    ingredients[INGREDIENT_LIST.cheese] = 0
-    ingredients[INGREDIENT_LIST.bacon] = 0
 
     this.state = {
-      ingredients: ingredients,
-      price: INGREDIENTS_PRICE.base,
+      ingredients: null,
+      price: 0,
       checkingOut: false,
       loading: false
     }
   }
 
+  componentDidMount = async () => {
+    try {
+      const ingredients = (await axios.get('/Ingredients.json')).data
+      const price = this.calculateCost(ingredients)
+      this.setState({ ingredients: ingredients, price: price })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   adjustIngredients = (type, adjustType) => {
-    let newPrice = this.state.price
     const ingredients = { ...this.state }.ingredients
     ingredients[INGREDIENT_LIST[type]] += adjustType
 
@@ -37,11 +41,7 @@ class BurgerBuilder extends Component {
     }
 
     // Determine the new price. Convert it to two decimal places
-    newPrice += adjustType * INGREDIENTS_PRICE[INGREDIENT_LIST[type]]
-    // Bounds check to make sure disabled button result is not subverted
-    if (ingredients[INGREDIENT_LIST[type]] < 0) {
-      newPrice = this.state.price
-    }
+    const newPrice = this.calculateCost(ingredients)
 
     const newState = {
       ingredients: ingredients,
@@ -49,6 +49,16 @@ class BurgerBuilder extends Component {
     }
 
     this.setState(newState)
+  }
+
+  calculateCost = (ingredients) => {
+    let cost = 0
+    for (const ingredient in ingredients) {
+      // Amount * Value
+      cost +=
+        ingredients[ingredient] * INGREDIENTS_PRICE[ingredient]
+    }
+    return cost
   }
 
   checkOut = () => {
@@ -86,7 +96,7 @@ class BurgerBuilder extends Component {
     }
 
     let modalContent = null
-    if (this.state.loading) {
+    if (this.state.loading || !this.state.ingredients) {
       modalContent = <Spinner />
     } else {
       modalContent = (
@@ -99,6 +109,23 @@ class BurgerBuilder extends Component {
       )
     }
 
+    let burger = null
+    if (this.state.ingredients) {
+      burger = <Burger ingredients={this.state.ingredients} />
+    }
+
+    let controls = null
+    if (this.state.ingredients) {
+      controls = (
+        <BuildControls
+          adjustIngredients={this.adjustIngredients}
+          disabledDecrements={disabledDecrements}
+          price={this.state.price}
+          disableCheckout={disableCheckout}
+          handleCheckOut={this.checkOut}
+        />
+      )
+    }
     return (
       <>
         <Modal
@@ -107,14 +134,8 @@ class BurgerBuilder extends Component {
         >
           {modalContent}
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
-        <BuildControls
-          adjustIngredients={this.adjustIngredients}
-          disabledDecrements={disabledDecrements}
-          price={this.state.price}
-          disableCheckout={disableCheckout}
-          handleCheckOut={this.checkOut}
-        />
+        {burger}
+        {controls}
       </>
     )
   }
