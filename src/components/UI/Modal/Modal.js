@@ -22,7 +22,7 @@ class Modal extends Component {
       <>
         <Backdrop
           show={this.props.show}
-          removeBackdrop={this.props.exitCheckout}
+          removeBackdrop={this.props.removeBackdrop}
         />
         <div className={appliedClasses.join(' ')}>
           {this.props.children}
