@@ -1,13 +1,17 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 
 import Burger from '../../Burger/Burger'
 import Button from '../../UI/Button/Button'
 
 import classes from './CheckoutSummary.module.css'
 
-const CheckoutSummary = ({ ingredients }) => {
+const CheckoutSummary = ({ ingredients, history }) => {
   const handleClick = () => {
-    console.log(ingredients)
+  }
+
+  const handleCancel = () => {
+    history.push('/')
   }
 
   return (
@@ -16,10 +20,10 @@ const CheckoutSummary = ({ ingredients }) => {
       <div className={classes.Burger}>
         <Burger ingredients={ingredients} />
       </div>
-      <Button onClick={handleClick}> Cancel </Button>
+      <Button onClick={handleCancel}> Cancel </Button>
       <Button onClick={handleClick} success> Coninute </Button>
     </div>
   )
 }
 
-export default CheckoutSummary
+export default withRouter(CheckoutSummary)

@@ -32,6 +32,9 @@ class BurgerBuilder extends Component {
     }
   }
 
+  componentWillUnmount = () => {
+  }
+
   adjustIngredients = (type, adjustType) => {
     const ingredients = { ...this.state }.ingredients
     ingredients[INGREDIENT_LIST[type]] += adjustType
@@ -69,17 +72,8 @@ class BurgerBuilder extends Component {
     this.setState({ checkingOut: false })
   }
 
-  continueCheckout = async () => {
-    const order = { ...this.state.ingredients, ...this.state.price }
-    try {
-      const sendOrder = axios.post('/orders.json', order)
-      this.setState({ loading: true })
-
-      await sendOrder
-      this.setState({ loading: false, checkingOut: false })
-    } catch (err) {
-      this.setState({ loading: false, checkingOut: false })
-    }
+  continueCheckout = () => {
+    this.props.history.push('/checkout')
   }
 
   render = () => {
