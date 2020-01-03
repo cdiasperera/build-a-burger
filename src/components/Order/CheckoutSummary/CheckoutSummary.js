@@ -7,7 +7,7 @@ import Button from '../../UI/Button/Button'
 import classes from './CheckoutSummary.module.css'
 
 const CheckoutSummary = ({ history, location, ingredients }) => {
-  const handleClick = () => {
+  const handleContiue = () => {
     const continuePath = '/checkout/contact' + location.search
     console.log(continuePath)
     history.push(continuePath)
@@ -24,7 +24,7 @@ const CheckoutSummary = ({ history, location, ingredients }) => {
         <Burger ingredients={ingredients} />
       </div>
       <Button onClick={handleCancel}> Cancel </Button>
-      <Button onClick={handleClick} success> Coninute </Button>
+      <Button onClick={handleContiue} success> Coninute </Button>
     </div>
   )
 }
