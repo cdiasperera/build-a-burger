@@ -14,10 +14,10 @@ class Checkout extends Component {
 
     const query = new URLSearchParams(search)
     const ingredients = {}
-    const price = {}
+    let price = 0
     for (const param of query.entries()) {
       if (param[0] === 'price') {
-        price[param[0]] = param[1]
+        price = param[1]
       } else {
         ingredients[param[0]] = param[1]
       }
