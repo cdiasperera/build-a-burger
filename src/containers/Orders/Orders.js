@@ -5,6 +5,8 @@ import axios from '../../axios'
 import Order from '../../components/Order/Order'
 import Spinner from '../../components/UI/Spinner/Spinner'
 
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+
 class Orders extends Component {
   state = {
     orders: {},
@@ -28,7 +30,8 @@ class Orders extends Component {
       page = <Spinner />
     } else {
       const orders = []
-      for (const [key, value] of Object.entries(this.state.orders)) {
+      for (const key in this.state.orders) {
+        const value = this.state.orders[key]
         orders.push(
           <Order
             key={key}
@@ -48,4 +51,4 @@ class Orders extends Component {
   }
 }
 
-export default Orders
+export default withErrorHandler(Orders, axios)
