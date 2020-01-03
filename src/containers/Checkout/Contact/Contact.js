@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import axios from '../../../axios'
 
@@ -40,6 +41,7 @@ class Contact extends Component {
       this.setState({ loading: false })
       console.log(err)
     }
+    this.props.history.push('/')
   }
 
   render = () => {
@@ -69,4 +71,4 @@ class Contact extends Component {
   }
 }
 
-export default Contact
+export default withRouter(Contact)
