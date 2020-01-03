@@ -7,16 +7,40 @@ import CheckoutSummary from
 import Contact from './Contact/Contact'
 
 class Checkout extends Component {
+  getIngredientsFromQuery = (search) => {
+    if (!search) {
+      return {}
+    }
+
+    const query = new URLSearchParams(search)
+    const ingredients = {}
+    for (const param of query.entries()) {
+      ingredients[param[0]] = param[1]
+    }
+    return ingredients
+  }
+
+  getSearchFromURL = (url) => {
+    if (url === '') {
+      return null
+    }
+    return url.match(/^\?[^/]*/)[0]
+  }
+
   render = () => {
+    const search = this.getSearchFromURL(this.props.location.search)
+    const ingredients = this.getIngredientsFromQuery(search)
     const contactPath =
       this.props.match.path + '/contact'
 
     return (
       <>
-        <CheckoutSummary />
+        <CheckoutSummary ingredients={ingredients} />
         <Route
           path={contactPath}
-          component={Contact}
+          render={() => {
+            return <Contact ingredients={ingredients} />
+          }}
         />
       </>
     )

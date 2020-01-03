@@ -14,6 +14,10 @@ class Contact extends Component {
     }
   }
 
+  handleOrder = () => {
+        
+  }
+
   render = () => {
     return (
       <div className={classes.Contact}>
@@ -23,7 +27,7 @@ class Contact extends Component {
           <input type='email' name='email' placeholder='Your Email' />
           <input type='text' name='street' placeholder='Your Street' />
           <input type='text' name='postalCode' placeholder='Your Postal Code' />
-          <Button success> Order </Button>
+          <Button success onClick={this.handleOrder}> Order </Button>
         </form>
       </div>
     )
