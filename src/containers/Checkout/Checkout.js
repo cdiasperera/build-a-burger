@@ -22,7 +22,7 @@ class Checkout extends Component {
         ingredients[param[0]] = param[1]
       }
     }
-    return { ...ingredients, ...price }
+    return { ingredients, price }
   }
 
   getSearchFromURL = (url) => {
@@ -35,6 +35,7 @@ class Checkout extends Component {
   render = () => {
     const search = this.getSearchFromURL(this.props.location.search)
     const { ingredients, price } = this.getParamsFromQuery(search)
+    console.log(ingredients)
     const contactPath =
       this.props.match.path + '/contact'
 
