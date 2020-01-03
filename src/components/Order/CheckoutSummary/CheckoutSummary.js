@@ -6,13 +6,15 @@ import Button from '../../UI/Button/Button'
 
 import classes from './CheckoutSummary.module.css'
 
-const CheckoutSummary = ({ ingredients, history }) => {
+const CheckoutSummary = ({ history, location }) => {
   const handleClick = () => {
   }
 
   const handleCancel = () => {
     history.goBack()
   }
+
+  const ingredients = getIngredientsFromQuery(location.search)
 
   return (
     <div className={classes.CheckoutSummary}>
@@ -24,6 +26,15 @@ const CheckoutSummary = ({ ingredients, history }) => {
       <Button onClick={handleClick} success> Coninute </Button>
     </div>
   )
+}
+
+const getIngredientsFromQuery = (search) => {
+  const query = new URLSearchParams(search)
+  const ingredients = {}
+  for (const param of query.entries()) {
+    ingredients[param[0]] = param[1]
+  }
+  return ingredients
 }
 
 export default withRouter(CheckoutSummary)

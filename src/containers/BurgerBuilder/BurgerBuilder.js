@@ -73,7 +73,11 @@ class BurgerBuilder extends Component {
   }
 
   continueCheckout = () => {
-    this.props.history.push('/checkout')
+    const searchParams = new URLSearchParams(this.state.ingredients)
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + searchParams.toString()
+    })
   }
 
   render = () => {
