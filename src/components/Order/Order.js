@@ -6,7 +6,6 @@ import { INGREDIENTS_ORDER, INGREDIENT_LIST }
 import classes from './Order.module.css'
 
 const Order = ({ ingredients, price }) => {
-  console.log(price)
   const ingredientSummary = []
   for (const ingredient of INGREDIENTS_ORDER) {
     if (
