@@ -1,0 +1,11 @@
+.Contact {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+}
+
+@media (min-width: 700px) {
+  .Contact {
+    width: 600px;
+  }
+}

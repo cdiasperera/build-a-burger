@@ -6,15 +6,19 @@ import Button from '../../UI/Button/Button'
 
 import classes from './CheckoutSummary.module.css'
 
-const CheckoutSummary = ({ history, location }) => {
+const CheckoutSummary = ({ history, location, match }) => {
   const handleClick = () => {
+    const continuePath = '/checkout/contact' + location.search
+    console.log(continuePath)
+    history.push(continuePath)
   }
 
   const handleCancel = () => {
     history.goBack()
   }
 
-  const ingredients = getIngredientsFromQuery(location.search)
+  const search = getSearchFromURL(location.search)
+  const ingredients = getIngredientsFromQuery(search)
 
   return (
     <div className={classes.CheckoutSummary}>
@@ -29,12 +33,22 @@ const CheckoutSummary = ({ history, location }) => {
 }
 
 const getIngredientsFromQuery = (search) => {
+  if (!search) {
+    return {}
+  }
   const query = new URLSearchParams(search)
   const ingredients = {}
   for (const param of query.entries()) {
     ingredients[param[0]] = param[1]
   }
   return ingredients
+}
+
+const getSearchFromURL = (url) => {
+  if (url === '') {
+    return null
+  }
+  return url.match(/^\?[^/]*/)[0]
 }
 
 export default withRouter(CheckoutSummary)
