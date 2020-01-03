@@ -31,7 +31,6 @@ const Burger = ({ ingredients }) => {
 }
 
 const getBurgerQueue = (ingredients) => {
-  console.log(ingredients)
   // The number of ingredients added. We use this to see if no ingredients were
   // added
   let numIngredients = 0
