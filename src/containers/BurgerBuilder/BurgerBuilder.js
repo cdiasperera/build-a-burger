@@ -24,11 +24,13 @@ class BurgerBuilder extends Component {
 
   componentDidMount = async () => {
     try {
+      this.setState({ loading: true })
       const ingredients = (await axios.get('/Ingredients.json')).data
       const price = this.calculateCost(ingredients)
-      this.setState({ ingredients: ingredients, price: price })
+      this.setState({ ingredients: ingredients, price: price, loading: false })
     } catch (err) {
       console.log(err)
+      this.setState({ loading: false })
     }
   }
 
@@ -128,6 +130,18 @@ class BurgerBuilder extends Component {
         />
       )
     }
+
+    let page = null
+    if (this.state.loading) {
+      page = <Spinner />
+    } else {
+      page = (
+        <>
+          {burger}
+          {controls}
+        </>
+      )
+    }
     return (
       <>
         <Modal
@@ -136,8 +150,7 @@ class BurgerBuilder extends Component {
         >
           {modalContent}
         </Modal>
-        {burger}
-        {controls}
+        {page}
       </>
     )
   }
