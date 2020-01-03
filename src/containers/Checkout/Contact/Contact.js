@@ -11,11 +11,18 @@ class Contact extends Component {
     address: {
       street: '',
       postalCode: ''
-    }
+    },
+    loading: false
   }
 
-  handleOrder = () => {
-        
+  handleOrder = (event) => {
+    event.preventDefault()
+    this.setState({ loading: true })
+    const order = {
+      ingredients: this.props.ingredients,
+      price: this.props.price
+    }
+    console.log({ order })
   }
 
   render = () => {

@@ -7,17 +7,21 @@ import CheckoutSummary from
 import Contact from './Contact/Contact'
 
 class Checkout extends Component {
-  getIngredientsFromQuery = (search) => {
+  getParamsFromQuery = (search) => {
     if (!search) {
       return {}
     }
 
     const query = new URLSearchParams(search)
     const ingredients = {}
+    const price = {}
     for (const param of query.entries()) {
+      if (param[0] === 'price') {
+        price[param[0]] = param[1]
+      }
       ingredients[param[0]] = param[1]
     }
-    return ingredients
+    return { ...ingredients, ...price }
   }
 
   getSearchFromURL = (url) => {
@@ -29,7 +33,7 @@ class Checkout extends Component {
 
   render = () => {
     const search = this.getSearchFromURL(this.props.location.search)
-    const ingredients = this.getIngredientsFromQuery(search)
+    const { ingredients, price } = this.getParamsFromQuery(search)
     const contactPath =
       this.props.match.path + '/contact'
 
@@ -39,7 +43,7 @@ class Checkout extends Component {
         <Route
           path={contactPath}
           render={() => {
-            return <Contact ingredients={ingredients} />
+            return <Contact price={price} ingredients={ingredients} />
           }}
         />
       </>
