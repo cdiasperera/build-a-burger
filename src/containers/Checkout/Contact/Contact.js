@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
+import camelCase from '../../../helper/camelCase'
 import axios from '../../../axios'
 
 import Button from '../../../components/UI/Button/Button'
@@ -11,13 +12,26 @@ import classes from './Contact.module.css'
 
 class Contact extends Component {
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: ''
-    },
     loading: false
+  }
+
+  createOrderFormObject = (elementType, label, type) => {
+    return {
+      elementType: elementType,
+      elementConfig: {
+        label: label,
+        name: camelCase(label),
+        type: type,
+        placeholder: 'Your ' + label
+      }
+    }
+  }
+
+  ORDER_FORM = {
+    name: this.createOrderFormObject('input', 'Name', 'text'),
+    street: this.createOrderFormObject('input', 'Street', 'text'),
+    postalCode: this.createOrderFormObject('input', 'Postal Code', 'text'),
+    email: this.createOrderFormObject('input', 'Email', 'email')
   }
 
   handleOrder = async (event) => {
@@ -25,15 +39,7 @@ class Contact extends Component {
     this.setState({ loading: true })
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
-      customer: {
-        name: 'c',
-        address: {
-          street: 'st',
-          postalCode: '0000'
-        },
-        email: 'test@test.com'
-      }
+      price: this.props.price
     }
     try {
       await axios.post('/orders.json', order)
@@ -45,6 +51,26 @@ class Contact extends Component {
     this.props.history.push('/')
   }
 
+  generateInputs = () => {
+    const inputs = []
+    for (const key in this.ORDER_FORM) {
+      const input = this.ORDER_FORM[key]
+      inputs.push(
+        <Input
+          key={input.elementConfig.name}
+          inputType={input.elementType}
+          label={input.elementConfig.label}
+          type={input.elementConfig.type}
+          name={input.elementConfig.name}
+          placeholder={input.elementConfig.placeholder}
+        />
+      )
+    }
+    return inputs
+  }
+
+  inputs = this.generateInputs()
+
   render = () => {
     let form
     if (this.state.loading) {
@@ -54,30 +80,7 @@ class Contact extends Component {
         <>
           <h4>Enter your contact details</h4>
           <form>
-            <Input
-              label='Name'
-              type='text'
-              name='name'
-              placeholder='Your Name'
-            />
-            <Input
-              label='Email'
-              type='email'
-              name='email'
-              placeholder='Your Email'
-            />
-            <Input
-              label='Street'
-              type='text'
-              name='street'
-              placeholder='Your Street'
-            />
-            <Input
-              label='Postal Code'
-              type='text'
-              name='postalCode'
-              placeholder='Your Postal Code'
-            />
+            {this.inputs}
             <Button success onClick={this.handleOrder}> Order </Button>
           </form>
         </>
