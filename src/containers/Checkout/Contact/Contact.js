@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom'
 import axios from '../../../axios'
 
 import Button from '../../../components/UI/Button/Button'
+import Spinner from '../../../components/UI/Spinner/Spinner'
+import Input from '../../../components/UI/Input/Input'
 
 import classes from './Contact.module.css'
-import Spinner from '../../../components/UI/Spinner/Spinner'
 
 class Contact extends Component {
   state = {
@@ -53,10 +54,30 @@ class Contact extends Component {
         <>
           <h4>Enter your contact details</h4>
           <form>
-            <input type='text' name='name' placeholder='Your Name' />
-            <input type='email' name='email' placeholder='Your Email' />
-            <input type='text' name='street' placeholder='Your Street' />
-            <input type='text' name='postalCode' placeholder='Your Postal Code' />
+            <Input
+              label='Name'
+              type='text'
+              name='name'
+              placeholder='Your Name'
+            />
+            <Input
+              label='Email'
+              type='email'
+              name='email'
+              placeholder='Your Email'
+            />
+            <Input
+              label='Street'
+              type='text'
+              name='street'
+              placeholder='Your Street'
+            />
+            <Input
+              label='Postal Code'
+              type='text'
+              name='postalCode'
+              placeholder='Your Postal Code'
+            />
             <Button success onClick={this.handleOrder}> Order </Button>
           </form>
         </>
