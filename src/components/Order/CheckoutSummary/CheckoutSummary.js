@@ -9,7 +9,6 @@ import classes from './CheckoutSummary.module.css'
 const CheckoutSummary = ({ history, location, ingredients }) => {
   const handleContiue = () => {
     const continuePath = '/checkout/contact' + location.search
-    console.log(continuePath)
     history.push(continuePath)
   }
 
