@@ -2,17 +2,28 @@ import React from 'react'
 
 import classes from './Input.module.css'
 
-const Input = ({ label, inputType, ...rest }) => {
+const Input = ({ label, inputType, isValid, shouldValidate, ...rest }) => {
   let inputElement = null
+
+  let validStateClass = null
+  if (shouldValidate) {
+    if (isValid) {
+      validStateClass = classes.Valid
+    } else {
+      validStateClass = classes.Invalid
+    }
+  }
+
+  const props = { className: validStateClass, ...rest }
   switch (inputType) {
     case ('input'):
-      inputElement = <input {...rest} />
+      inputElement = <input {...props} />
       break
     case ('textarea'):
-      inputElement = <textarea {...rest} />
+      inputElement = <textarea {...props} />
       break
     default:
-      inputElement = <input {... rest} />
+      inputElement = <input {...props} />
   }
 
   return (
