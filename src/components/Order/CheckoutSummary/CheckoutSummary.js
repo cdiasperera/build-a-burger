@@ -14,7 +14,7 @@ const CheckoutSummary = ({ history, location, ingredients }) => {
   }
 
   const handleCancel = () => {
-    history.goBack()
+    history.push('/')
   }
 
   return (
