@@ -12,10 +12,14 @@ import classes from './Contact.module.css'
 
 class Contact extends Component {
   state = {
+    name: { value: '', valid: false },
+    email: { value: '', valid: false },
+    street: { value: '', valid: false },
+    postalCode: { value: '', valid: false },
     loading: false
   }
 
-  createOrderFormObject = (elementType, label, type) => {
+  createOrderFormObject = (elementType, label, type, rules) => {
     return {
       elementType: elementType,
       elementConfig: {
@@ -23,23 +27,44 @@ class Contact extends Component {
         name: camelCase(label),
         type: type,
         placeholder: 'Your ' + label
-      }
+      },
+      rules: rules
     }
   }
 
   ORDER_FORM = {
-    name: this.createOrderFormObject('input', 'Name', 'text'),
-    street: this.createOrderFormObject('input', 'Street', 'text'),
-    postalCode: this.createOrderFormObject('input', 'Postal Code', 'text'),
-    email: this.createOrderFormObject('input', 'Email', 'email')
+    name: this.createOrderFormObject(
+      'input', 'Name', 'text',
+      { required: true }),
+    street: this.createOrderFormObject(
+      'input', 'Street', 'text',
+      { required: true }),
+    postalCode: this.createOrderFormObject(
+      'input', 'Postal Code', 'text',
+      { required: true }),
+    email: this.createOrderFormObject(
+      'input', 'Email', 'email',
+      { required: true })
+  }
+
+  checkRules = (value, rules) => {
+    if (rules.required) {
+      if (!value.length > 0) {
+        return false
+      }
+    }
+    // Passed on the rules, can return true
+    return true
   }
 
   handleOrder = async (event) => {
     event.preventDefault()
     this.setState({ loading: true })
+    const { loading, ...contactData } = { ...this.state }
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price
+      price: this.props.price,
+      contact: contactData
     }
     try {
       await axios.post('/orders.json', order)
@@ -51,7 +76,19 @@ class Contact extends Component {
     this.props.history.push('/')
   }
 
-  generateInputs = () => {
+  handleChange = (event) => {
+    const newDataState = {
+      value: event.target.value,
+      valid: this.checkRules(
+        event.target.value,
+        this.ORDER_FORM[event.target.name].rules
+      )
+    }
+    console.log(newDataState)
+    this.setState({ [event.target.name]: newDataState })
+  }
+
+  render = () => {
     const inputs = []
     for (const key in this.ORDER_FORM) {
       const input = this.ORDER_FORM[key]
@@ -59,19 +96,13 @@ class Contact extends Component {
         <Input
           key={input.elementConfig.name}
           inputType={input.elementType}
-          label={input.elementConfig.label}
-          type={input.elementConfig.type}
-          name={input.elementConfig.name}
-          placeholder={input.elementConfig.placeholder}
+          value={this.state[key].value}
+          onChange={this.handleChange}
+          {...input.elementConfig}
         />
       )
     }
-    return inputs
-  }
 
-  inputs = this.generateInputs()
-
-  render = () => {
     let form
     if (this.state.loading) {
       form = <Spinner />
@@ -79,9 +110,9 @@ class Contact extends Component {
       form = (
         <>
           <h4>Enter your contact details</h4>
-          <form>
-            {this.inputs}
-            <Button success onClick={this.handleOrder}> Order </Button>
+          <form onSubmit={this.handleOrder}>
+            {inputs}
+            <Button success> Order </Button>
           </form>
         </>
       )

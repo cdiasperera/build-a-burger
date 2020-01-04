@@ -1,4 +1,5 @@
 import ucFirst from './ucFirst'
+import lcFirst from './lcFirst'
 
 const camelCase = (str) => {
   let camelCased = ''
@@ -8,6 +9,8 @@ const camelCase = (str) => {
     let word = words[i]
     if (i !== 0) {
       word = ucFirst(word)
+    } else {
+      word = lcFirst(word)
     }
     camelCased += word
   }
