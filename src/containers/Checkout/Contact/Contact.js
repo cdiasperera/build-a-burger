@@ -141,7 +141,7 @@ class Contact extends Component {
           <h4>Enter your contact details</h4>
           <form onSubmit={this.handleOrder}>
             {inputs}
-            <Button disabled={this.state.formValid} success> Order </Button>
+            <Button disabled={!this.state.formValid} success> Order </Button>
           </form>
         </>
       )

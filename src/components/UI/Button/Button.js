@@ -2,7 +2,8 @@ import React from 'react'
 
 import classes from './Button.module.css'
 
-const Button = ({ onClick, children, success }) => {
+const Button = ({ disabled, onClick, children, success }) => {
+  console.log(disabled)
   let className
   if (success) {
     className = [classes.Button, classes.Success].join(' ')
@@ -11,6 +12,7 @@ const Button = ({ onClick, children, success }) => {
   }
   return (
     <button
+      disabled={disabled}
       className={className}
       onClick={onClick}
     >
