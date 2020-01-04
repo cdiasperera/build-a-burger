@@ -29,11 +29,28 @@
   height: 30px;
 }
 
+.Input input.Invalid {
+  border-bottom: 3px solid red;
+  background-color: rgb(255, 218, 214);
+}
+
+.Input input.Valid {
+  border-bottom: 3px solid green;
+  background-color: rgb(200, 255, 200);
+}
+
 .Input input:focus {
   outline: none;
   background-color: #ccc;
 }
 
+.Input input.Valid:focus {
+  background-color: rgb(161, 255, 161);
+}
+
+.Input input.Invalid:focus {
+  background-color: rgb(255, 188, 181);
+}
 @media (min-width: 700px) {
   .Input input {
     width: 450px;
