@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import shortId from 'shortid'
 
-import Ingredient, { INGREDIENTS_ORDER }
+import Ingredient, { INGREDIENTS_PRICE, INGREDIENTS_ORDER }
   from './Ingredient/Ingredient'
 
 import classes from './Burger.module.css'
@@ -69,4 +69,15 @@ Burger.defaultProps = {
   }
 }
 
+const calculateCost = (ingredients) => {
+  let cost = 0
+  for (const ingredient in ingredients) {
+    // Amount * Value
+    cost +=
+      ingredients[ingredient] * INGREDIENTS_PRICE[ingredient]
+  }
+  return cost
+}
+
 export default Burger
+export { calculateCost }

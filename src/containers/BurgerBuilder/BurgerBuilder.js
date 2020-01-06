@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import ACTIONS from '../../store/actions'
 
-import Burger from '../../components/Burger/Burger'
-import { INGREDIENT_LIST, INGREDIENTS_PRICE } from
+import Burger, { calculateCost } from '../../components/Burger/Burger'
+import { INGREDIENT_LIST } from
   '../../components/Burger/Ingredient/Ingredient'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
@@ -27,7 +27,7 @@ class BurgerBuilder extends Component {
     try {
       this.setState({ loading: true })
       const ingredients = (await axios.get('/Ingredients.json')).data
-      const price = this.calculateCost(ingredients)
+      const price = calculateCost(ingredients)
       this.props.setOrder(ingredients, price)
       this.setState({ ingredients: ingredients, price: price, loading: false })
     } catch (err) {
@@ -45,7 +45,7 @@ class BurgerBuilder extends Component {
     }
 
     // Determine the new price. Convert it to two decimal places
-    const newPrice = this.calculateCost(ingredients)
+    const newPrice = calculateCost(ingredients)
 
     const newState = {
       ingredients: ingredients,
@@ -54,16 +54,6 @@ class BurgerBuilder extends Component {
 
     this.props.setOrder(ingredients, newPrice)
     this.setState(newState)
-  }
-
-  calculateCost = (ingredients) => {
-    let cost = 0
-    for (const ingredient in ingredients) {
-      // Amount * Value
-      cost +=
-        ingredients[ingredient] * INGREDIENTS_PRICE[ingredient]
-    }
-    return cost
   }
 
   checkOut = () => {

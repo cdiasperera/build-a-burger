@@ -61,5 +61,14 @@ Ingredient.propTypes = {
   type: PropTypes.string.isRequired
 }
 
+const EXAMPLE_INGREDIENTS = {
+  [INGREDIENT_LIST.salad]: 1,
+  [INGREDIENT_LIST.cheese]: 1,
+  [INGREDIENT_LIST.meat]: 1,
+  [INGREDIENT_LIST.bacon]: 1
+}
+
 export default Ingredient
-export { INGREDIENT_LIST, INGREDIENTS_ORDER, INGREDIENTS_PRICE }
+export {
+  INGREDIENT_LIST, INGREDIENTS_ORDER, INGREDIENTS_PRICE, EXAMPLE_INGREDIENTS
+}
