@@ -69,6 +69,7 @@ class BurgerBuilder extends Component {
   }
 
   render = () => {
+    console.log(this.props)
     const disabledDecrements = []
     let disableCheckout = true
     for (const key in this.props.ingredients) {

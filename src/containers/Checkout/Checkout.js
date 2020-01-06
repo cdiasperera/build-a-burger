@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import CheckoutSummary from
   '../../components/Order/CheckoutSummary/CheckoutSummary'
@@ -7,49 +8,33 @@ import CheckoutSummary from
 import Contact from './Contact/Contact'
 
 class Checkout extends Component {
-  getParamsFromQuery = (search) => {
-    if (!search) {
-      return {}
-    }
-
-    const query = new URLSearchParams(search)
-    const ingredients = {}
-    let price = 0
-    for (const param of query.entries()) {
-      if (param[0] === 'price') {
-        price = param[1]
-      } else {
-        ingredients[param[0]] = param[1]
-      }
-    }
-    return { ingredients, price }
-  }
-
-  getSearchFromURL = (url) => {
-    if (url === '') {
-      return null
-    }
-    return url.match(/^\?[^/]*/)[0]
-  }
-
   render = () => {
-    const search = this.getSearchFromURL(this.props.location.search)
-    const { ingredients, price } = this.getParamsFromQuery(search)
-    const contactPath =
-      this.props.match.path + '/contact'
+    const ingredients = this.props.ingredients
+    const price = this.props.price
 
-    return (
-      <>
-        <CheckoutSummary ingredients={ingredients} />
-        <Route
-          path={contactPath}
-          render={() => {
-            return <Contact price={price} ingredients={ingredients} />
-          }}
-        />
-      </>
-    )
+    const contactPath = this.props.match.path + '/contact'
+
+    let page = null
+    if (ingredients) {
+      page = (
+        <>
+          <CheckoutSummary ingredients={ingredients} />
+          <Route
+            path={contactPath}
+            render={() => <Contact price={price} ingredients={ingredients} />}
+          />
+        </>
+      )
+    } else {
+      page = (<Redirect to='/' />)
+    }
+    return page
   }
 }
 
-export default Checkout
+const mapStateToProps = state => ({
+  ingredients: state.order.ingredients,
+  price: state.order.price
+})
+
+export default connect(mapStateToProps)(Checkout)
