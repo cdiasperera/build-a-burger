@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from '../../axios'
+import { connect } from 'react-redux'
 
 import Burger from '../../components/Burger/Burger'
 import { INGREDIENT_LIST, INGREDIENTS_PRICE } from
@@ -87,6 +88,7 @@ class BurgerBuilder extends Component {
   }
 
   render = () => {
+    console.log(this.props)
     const disabledDecrements = []
     let disableCheckout = true
     for (const key in this.state.ingredients) {
@@ -156,4 +158,16 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default withErrorHandler(BurgerBuilder, axios)
+const mapStateToProps = state => ({
+  ingredients: state.order.ingredients,
+  price: state.order.price
+})
+
+const mapDispatchToProps = dispatch => {
+  return {}
+}
+
+export default withErrorHandler(
+  connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder),
+  axios
+)
