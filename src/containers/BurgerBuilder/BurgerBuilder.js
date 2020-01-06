@@ -36,9 +36,6 @@ class BurgerBuilder extends Component {
     }
   }
 
-  componentWillUnmount = () => {
-  }
-
   adjustIngredients = (type, adjustType) => {
     const ingredients = { ...this.props.ingredients }
     ingredients[INGREDIENT_LIST[type]] += adjustType
@@ -78,19 +75,10 @@ class BurgerBuilder extends Component {
   }
 
   continueCheckout = () => {
-    const params = {
-      ...this.props.ingredients,
-      price: this.props.price.toFixed(2)
-    }
-    const searchParams = new URLSearchParams(params)
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + searchParams.toString()
-    })
+    this.props.history.push({ pathname: '/checkout' })
   }
 
   render = () => {
-    console.log(this.props.price)
     const disabledDecrements = []
     let disableCheckout = true
     for (const key in this.props.ingredients) {
