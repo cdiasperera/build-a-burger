@@ -29,7 +29,7 @@ class BurgerBuilder extends Component {
       const ingredients = (await axios.get('/Ingredients.json')).data
       const price = calculateCost(ingredients)
       this.props.setOrder(ingredients, price)
-      this.setState({ ingredients: ingredients, price: price, loading: false })
+      this.setState({ loading: false })
     } catch (err) {
       console.log(err)
       this.setState({ loading: false })

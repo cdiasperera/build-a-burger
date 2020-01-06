@@ -10,7 +10,6 @@ import Contact from './Contact/Contact'
 class Checkout extends Component {
   render = () => {
     const ingredients = this.props.ingredients
-
     const contactPath = this.props.match.path + '/contact'
 
     let page = null
