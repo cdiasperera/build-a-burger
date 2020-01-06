@@ -10,7 +10,6 @@ import Contact from './Contact/Contact'
 class Checkout extends Component {
   render = () => {
     const ingredients = this.props.ingredients
-    const price = this.props.price
 
     const contactPath = this.props.match.path + '/contact'
 
@@ -21,7 +20,7 @@ class Checkout extends Component {
           <CheckoutSummary ingredients={ingredients} />
           <Route
             path={contactPath}
-            render={() => <Contact price={price} ingredients={ingredients} />}
+            render={() => <Contact />}
           />
         </>
       )

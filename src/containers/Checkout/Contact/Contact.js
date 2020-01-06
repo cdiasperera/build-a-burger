@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-
+import { connect } from 'react-redux'
 import camelCase from '../../../helper/camelCase'
 import axios from '../../../axios'
 
@@ -155,4 +155,9 @@ class Contact extends Component {
   }
 }
 
-export default withRouter(Contact)
+const mapStateToProps = state => ({
+  ingredients: state.order.ingredients,
+  price: state.order.price
+})
+
+export default withRouter(connect(mapStateToProps)(Contact))
