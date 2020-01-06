@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from '../../axios'
 import { connect } from 'react-redux'
 
+import ACTIONS from '../../store/actions'
+
 import Burger from '../../components/Burger/Burger'
 import { INGREDIENT_LIST, INGREDIENTS_PRICE } from
   '../../components/Burger/Ingredient/Ingredient'
@@ -16,8 +18,6 @@ class BurgerBuilder extends Component {
     super(props)
 
     this.state = {
-      ingredients: null,
-      price: 0,
       checkingOut: false,
       loading: false
     }
@@ -28,6 +28,7 @@ class BurgerBuilder extends Component {
       this.setState({ loading: true })
       const ingredients = (await axios.get('/Ingredients.json')).data
       const price = this.calculateCost(ingredients)
+      this.props.setOrder(ingredients, price)
       this.setState({ ingredients: ingredients, price: price, loading: false })
     } catch (err) {
       console.log(err)
@@ -39,7 +40,7 @@ class BurgerBuilder extends Component {
   }
 
   adjustIngredients = (type, adjustType) => {
-    const ingredients = { ...this.state }.ingredients
+    const ingredients = { ...this.props.ingredients }
     ingredients[INGREDIENT_LIST[type]] += adjustType
 
     if (ingredients[INGREDIENT_LIST[type]] < 1) {
@@ -54,6 +55,7 @@ class BurgerBuilder extends Component {
       price: newPrice
     }
 
+    this.props.setOrder(ingredients, newPrice)
     this.setState(newState)
   }
 
@@ -77,8 +79,8 @@ class BurgerBuilder extends Component {
 
   continueCheckout = () => {
     const params = {
-      ...this.state.ingredients,
-      price: this.state.price.toFixed(2)
+      ...this.props.ingredients,
+      price: this.props.price.toFixed(2)
     }
     const searchParams = new URLSearchParams(params)
     this.props.history.push({
@@ -88,11 +90,11 @@ class BurgerBuilder extends Component {
   }
 
   render = () => {
-    console.log(this.props)
+    console.log(this.props.price)
     const disabledDecrements = []
     let disableCheckout = true
-    for (const key in this.state.ingredients) {
-      if (this.state.ingredients[key] <= 0) {
+    for (const key in this.props.ingredients) {
+      if (this.props.ingredients[key] <= 0) {
         disabledDecrements.push(key)
       } else {
         // We have found one ingredient that has been added, so we can enable
@@ -102,13 +104,13 @@ class BurgerBuilder extends Component {
     }
 
     let modalContent = null
-    if (this.state.loading || !this.state.ingredients) {
+    if (this.state.loading || !this.props.ingredients) {
       modalContent = <Spinner />
     } else {
       modalContent = (
         <OrderSummary
-          ingredients={this.state.ingredients}
-          price={this.state.price}
+          ingredients={this.props.ingredients}
+          price={this.props.price}
           exitCheckout={this.exitCheckout}
           continueCheckout={this.continueCheckout}
         />
@@ -116,17 +118,17 @@ class BurgerBuilder extends Component {
     }
 
     let burger = null
-    if (this.state.ingredients) {
-      burger = <Burger ingredients={this.state.ingredients} />
+    if (this.props.ingredients) {
+      burger = <Burger ingredients={this.props.ingredients} />
     }
 
     let controls = null
-    if (this.state.ingredients) {
+    if (this.props.ingredients) {
       controls = (
         <BuildControls
           adjustIngredients={this.adjustIngredients}
           disabledDecrements={disabledDecrements}
-          price={this.state.price}
+          price={this.props.price}
           disableCheckout={disableCheckout}
           handleCheckOut={this.checkOut}
         />
@@ -164,7 +166,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  const setOrder = (ingredients, price) => dispatch({
+    type: ACTIONS.order, ingredients, price
+  })
+  return {
+    setOrder
+  }
 }
 
 export default withErrorHandler(
