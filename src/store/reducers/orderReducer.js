@@ -35,11 +35,7 @@ const orderReducer = (prevState = initialState, action) => {
       const { ingredients, price } = adjustIngredients(
         prevState, action.ingredient, action.adjustType
       )
-      return {
-        ...prevState,
-        ingredients: ingredients,
-        price: price
-      }
+      return { ...prevState, ingredients, price }
     }
     default:
       return prevState
