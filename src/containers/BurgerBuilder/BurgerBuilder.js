@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from '../../axios'
 import { connect } from 'react-redux'
 
-import ACTIONS from '../../store/actions'
+import ACTIONS from '../../store/actions/actions'
 
 import Burger, { calculateCost } from '../../components/Burger/Burger'
 import { INGREDIENT_LIST } from
