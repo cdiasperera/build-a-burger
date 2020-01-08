@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import axios from '../../axios'
 import { connect } from 'react-redux'
 
-import ACTIONS from '../../store/actions/actions'
+import { order } from '../../store/actions/order'
 
-import Burger, { calculateCost } from '../../components/Burger/Burger'
-import { INGREDIENT_LIST } from
-  '../../components/Burger/Ingredient/Ingredient'
+import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import Spinner from '../../components/UI/Spinner/Spinner'
@@ -26,34 +24,14 @@ class BurgerBuilder extends Component {
   componentDidMount = async () => {
     try {
       this.setState({ loading: true })
-      const ingredients = (await axios.get('/Ingredients.json')).data
-      const price = calculateCost(ingredients)
-      this.props.setOrder(ingredients, price)
+      // const ingredients = (await axios.get('/Ingredients.json')).data
+      // const price = calculateCost(ingredients)
+      // this.props.setOrder(ingredients, price)
       this.setState({ loading: false })
     } catch (err) {
       console.log(err)
       this.setState({ loading: false })
     }
-  }
-
-  adjustIngredients = (type, adjustType) => {
-    const ingredients = { ...this.props.ingredients }
-    ingredients[INGREDIENT_LIST[type]] += adjustType
-
-    if (ingredients[INGREDIENT_LIST[type]] < 1) {
-      ingredients[INGREDIENT_LIST[type]] = 0
-    }
-
-    // Determine the new price. Convert it to two decimal places
-    const newPrice = calculateCost(ingredients)
-
-    const newState = {
-      ingredients: ingredients,
-      price: newPrice
-    }
-
-    this.props.setOrder(ingredients, newPrice)
-    this.setState(newState)
   }
 
   checkOut = () => {
@@ -69,7 +47,6 @@ class BurgerBuilder extends Component {
   }
 
   render = () => {
-    console.log(this.props)
     const disabledDecrements = []
     let disableCheckout = true
     for (const key in this.props.ingredients) {
@@ -105,7 +82,7 @@ class BurgerBuilder extends Component {
     if (this.props.ingredients) {
       controls = (
         <BuildControls
-          adjustIngredients={this.adjustIngredients}
+          adjustIngredients={this.props.adjustOrder}
           disabledDecrements={disabledDecrements}
           price={this.props.price}
           disableCheckout={disableCheckout}
@@ -145,11 +122,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => {
-  const setOrder = (ingredients, price) => dispatch({
-    type: ACTIONS.order, ingredients, price
-  })
+  const adjustOrder = (ingredient, adjustType) => dispatch(
+    order(ingredient, adjustType)
+  )
   return {
-    setOrder
+    adjustOrder
   }
 }
 

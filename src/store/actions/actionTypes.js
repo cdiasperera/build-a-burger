@@ -1,5 +1,5 @@
 const ACTIONS = {
-  order: 'order'
+  ORDER: 'order'
 }
 
 export default ACTIONS
