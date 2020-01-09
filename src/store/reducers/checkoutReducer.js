@@ -4,7 +4,7 @@ const initalState = {
   orderData: null
 }
 
-const orderReducer = (prevState = initalState, action) => {
+const checkoutReducer = (prevState = initalState, action) => {
   switch (action.type) {
     case ACTIONS.GETID:
       break
@@ -15,4 +15,4 @@ const orderReducer = (prevState = initalState, action) => {
   }
 }
 
-export default orderReducer
+export default checkoutReducer
