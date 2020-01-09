@@ -4,4 +4,8 @@ const order = (ingredient, adjustType) => {
   return { type: ACTIONS.ORDER, ingredient, adjustType }
 }
 
-export { order }
+const init = (ingredients, price) => {
+  return { type: ACTIONS.INIT, ingredients, price }
+}
+
+export { order, init }

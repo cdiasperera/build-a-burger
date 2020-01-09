@@ -37,6 +37,12 @@ const orderReducer = (prevState = initialState, action) => {
       )
       return { ...prevState, ingredients, price }
     }
+    case (ACTIONS.INIT):
+      return {
+        ...prevState,
+        ingredients: action.ingredients,
+        price: action.price
+      }
     default:
       return prevState
   }

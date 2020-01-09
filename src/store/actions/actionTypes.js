@@ -1,5 +1,6 @@
 const ACTIONS = {
-  ORDER: 'order'
+  ORDER: 'order',
+  INIT: 'INIT'
 }
 
 export default ACTIONS

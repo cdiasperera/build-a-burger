@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import axios from '../../axios'
 import { connect } from 'react-redux'
 
-import { order } from '../../store/actions/order'
+import { order, init } from '../../store/actions/order'
 
-import Burger from '../../components/Burger/Burger'
+import Burger, { calculateCost } from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import Spinner from '../../components/UI/Spinner/Spinner'
@@ -24,9 +24,9 @@ class BurgerBuilder extends Component {
   componentDidMount = async () => {
     try {
       this.setState({ loading: true })
-      // const ingredients = (await axios.get('/Ingredients.json')).data
-      // const price = calculateCost(ingredients)
-      // this.props.setOrder(ingredients, price)
+      const ingredients = (await axios.get('/Ingredients.json')).data
+      const price = calculateCost(ingredients)
+      this.props.initOrder(ingredients, price)
       this.setState({ loading: false })
     } catch (err) {
       console.log(err)
@@ -125,8 +125,14 @@ const mapDispatchToProps = dispatch => {
   const adjustOrder = (ingredient, adjustType) => dispatch(
     order(ingredient, adjustType)
   )
+
+  const initOrder = (ingredients, price) => dispatch(
+    init(ingredients, price)
+  )
+
   return {
-    adjustOrder
+    adjustOrder,
+    initOrder
   }
 }
 
