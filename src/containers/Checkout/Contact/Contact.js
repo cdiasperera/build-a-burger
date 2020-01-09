@@ -88,6 +88,7 @@ class Contact extends Component {
     event.preventDefault()
     this.setState({ loading: true })
     const { loading, ...contactData } = { ...this.state }
+
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
@@ -156,8 +157,8 @@ class Contact extends Component {
 }
 
 const mapStateToProps = state => ({
-  ingredients: state.order.ingredients,
-  price: state.order.price
+  ingredients: state.builder.ingredients,
+  price: state.builder.price
 })
 
 export default withRouter(connect(mapStateToProps)(Contact))

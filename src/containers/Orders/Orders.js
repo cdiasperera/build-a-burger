@@ -31,6 +31,7 @@ class Orders extends Component {
       const orders = []
       for (const key in this.state.orders) {
         const value = this.state.orders[key]
+        console.log(value)
         orders.push(
           <Order
             key={key}

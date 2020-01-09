@@ -1,8 +1,6 @@
 const ACTIONS = {
   BUILD: 'BUILD',
-  INIT: 'INIT',
-  ORDER: 'ORDER',
-  GETID: 'GETID'
+  INIT: 'INIT'
 }
 
 export default ACTIONS
