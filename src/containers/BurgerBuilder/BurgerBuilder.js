@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from '../../axios'
 import { connect } from 'react-redux'
 
-import { burger, init } from '../../store/actions/builder'
+import { build, init } from '../../store/actions/builder'
 
 import Burger, { calculateCost } from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
@@ -123,7 +123,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   const adjustOrder = (ingredient, adjustType) => dispatch(
-    burger(ingredient, adjustType)
+    build(ingredient, adjustType)
   )
 
   const initOrder = (ingredients, price) => dispatch(
