@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from '../../axios'
 import { connect } from 'react-redux'
 
-import { order, init } from '../../store/actions/order'
+import { burger, init } from '../../store/actions/builder'
 
 import Burger, { calculateCost } from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
@@ -117,13 +117,13 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => ({
-  ingredients: state.order.ingredients,
-  price: state.order.price
+  ingredients: state.builder.ingredients,
+  price: state.builder.price
 })
 
 const mapDispatchToProps = dispatch => {
   const adjustOrder = (ingredient, adjustType) => dispatch(
-    order(ingredient, adjustType)
+    burger(ingredient, adjustType)
   )
 
   const initOrder = (ingredients, price) => dispatch(

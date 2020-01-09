@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import orderReducer from './reducers/orderReducer'
+import builderReducer from './reducers/orderReducer'
 
 export default combineReducers({
-  order: orderReducer
+  builder: builderReducer
 })

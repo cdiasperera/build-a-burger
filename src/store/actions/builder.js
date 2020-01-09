@@ -1,11 +1,11 @@
 import ACTIONS from './actionTypes'
 
-const order = (ingredient, adjustType) => {
-  return { type: ACTIONS.ORDER, ingredient, adjustType }
+const burger = (ingredient, adjustType) => {
+  return { type: ACTIONS.BUILD, ingredient, adjustType }
 }
 
 const init = (ingredients, price) => {
   return { type: ACTIONS.INIT, ingredients, price }
 }
 
-export { order, init }
+export { burger, init }

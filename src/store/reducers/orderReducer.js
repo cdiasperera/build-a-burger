@@ -29,9 +29,9 @@ const adjustIngredients = (prevState, ingredient, adjustType) => {
   return { ingredients, price }
 }
 
-const orderReducer = (prevState = initialState, action) => {
+const builderReducer = (prevState = initialState, action) => {
   switch (action.type) {
-    case (ACTIONS.ORDER): {
+    case (ACTIONS.BUILD): {
       const { ingredients, price } = adjustIngredients(
         prevState, action.ingredient, action.adjustType
       )
@@ -39,13 +39,11 @@ const orderReducer = (prevState = initialState, action) => {
     }
     case (ACTIONS.INIT):
       return {
-        ...prevState,
-        ingredients: action.ingredients,
-        price: action.price
+        ...prevState, ingredients: action.ingredients, price: action.price
       }
     default:
       return prevState
   }
 }
 
-export default orderReducer
+export default builderReducer

@@ -1,5 +1,5 @@
 const ACTIONS = {
-  ORDER: 'order',
+  BUILD: 'BUILD',
   INIT: 'INIT'
 }
 
