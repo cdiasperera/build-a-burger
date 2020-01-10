@@ -8,14 +8,20 @@ import { auth } from '../../store/actions/auth'
 
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
-
+import Spinner from '../../components/UI/Spinner/Spinner'
 import classes from './Auth.module.css'
+
+const PURPOSES = {
+  signIn: 'signIn',
+  signUp: 'signUp'
+}
 
 class Auth extends Component {
   state = {
     email: { value: '', valid: false, shouldValidate: false },
     password: { value: '', valid: false, shouldValidate: false },
-    formValid: true
+    formValid: true,
+    formPurpose: PURPOSES.signIn
   }
 
   AUTH_FORM = {
@@ -48,7 +54,10 @@ class Auth extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    this.props.onAuth(this.state.email.value, this.state.password.value)
+    this.props.onAuth(
+      this.state.email.value,
+      this.state.password.value,
+      this.state.formPurpose)
   }
 
   render = () => {
@@ -70,22 +79,56 @@ class Auth extends Component {
       )
     }
 
+    let buttonText = ''
+    if (this.state.formPurpose === PURPOSES.signIn) {
+      buttonText = 'Sign In'
+    } else {
+      buttonText = 'Sign Up'
+    }
+
+    let page = null
+    if (this.props.loading) {
+      page = <Spinner />
+    } else {
+      let errorMessage = null
+      if (this.props.error) {
+        console.log(this.props.error)
+        errorMessage = <p>{this.props.error.message}</p>
+      }
+      page = (
+        <>
+          {errorMessage}
+          <form onSubmit={this.handleSubmit}>
+            {inputs}
+            <Button disabled={!this.state.formValid} success>
+              {buttonText}
+            </Button>
+          </form>
+        </>
+      )
+    }
+
     return (
       <div className={classes.Auth}>
-        <form onSubmit={this.handleSubmit}>
-          {inputs}
-          <Button disabled={!this.state.formValid} success> Submit </Button>
-        </form>
+        {page}
       </div>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  error: state.auth.error
+})
+
 const mapDispatchToProps = dispatch => {
-  const onAuth = (email, password) => dispatch(auth(email, password))
+  const onAuth = (email, password, method) => {
+    dispatch(auth(email, password, method))
+  }
   return {
     onAuth
   }
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
+export { PURPOSES }

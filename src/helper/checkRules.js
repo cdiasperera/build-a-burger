@@ -8,9 +8,12 @@ const checkRules = (value, rules) => {
   if (rules.isEmail) {
     // Make sure that the @ separates the domain and local-part and that the
     // email doesn't end with an @
+    const emailSections = value.match(/[^@]+/g)
     if (
-      value.match(/[^@]+/g).length !== 2 ||
-      value.charAt(value.length - 1) === '@') {
+      emailSections.length !== 2 ||
+      value.charAt(value.length - 1) === '@' ||
+      value.charAt(value.length - 1) === '.' ||
+      !emailSections[1].includes('.')) {
       return false
     }
   }
