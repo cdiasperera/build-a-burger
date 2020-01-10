@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import createAuthFormObject from '../../helper/createFormObject'
 import checkRules from '../../helper/checkRules'
+
+import { auth } from '../../store/actions/auth'
 
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
@@ -43,6 +46,11 @@ class Auth extends Component {
     this.setState({ [event.target.name]: newDataState })
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault()
+    this.props.onAuth(this.state.email.value, this.state.password.value)
+  }
+
   render = () => {
     const inputs = []
     for (const key in this.AUTH_FORM) {
@@ -61,9 +69,10 @@ class Auth extends Component {
         )
       )
     }
+
     return (
       <div className={classes.Auth}>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           {inputs}
           <Button disabled={!this.state.formValid} success> Submit </Button>
         </form>
@@ -72,4 +81,11 @@ class Auth extends Component {
   }
 }
 
-export default Auth
+const mapDispatchToProps = dispatch => {
+  const onAuth = (email, password) => dispatch(auth(email, password))
+  return {
+    onAuth
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Auth)
