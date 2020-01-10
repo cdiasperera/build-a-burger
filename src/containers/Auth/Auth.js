@@ -11,7 +11,8 @@ import classes from './Auth.module.css'
 class Auth extends Component {
   state = {
     email: { value: '', valid: false, shouldValidate: false },
-    password: { value: '', valid: false, shouldValidate: false }
+    password: { value: '', valid: false, shouldValidate: false },
+    formValid: true
   }
 
   AUTH_FORM = {
