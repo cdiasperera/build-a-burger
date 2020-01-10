@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import camelCase from '../../../helper/camelCase'
 import axios from '../../../axios'
+
+import createOrderFormObject from '../../../helper/createFormObject'
+import checkRules from '../../../helper/checkRules'
 
 import Button from '../../../components/UI/Button/Button'
 import Spinner from '../../../components/UI/Spinner/Spinner'
@@ -33,55 +35,22 @@ class Contact extends Component {
     }
   }
 
-  createOrderFormObject = (elementType, label, type, rules) => {
-    return {
-      elementType: elementType,
-      elementConfig: {
-        label: label,
-        name: camelCase(label),
-        type: type,
-        placeholder: 'Your ' + label
-      },
-      rules: rules
-    }
-  }
-
   ORDER_FORM = {
-    name: this.createOrderFormObject(
+    name: createOrderFormObject(
       'input', 'Name', 'text',
       { required: true }),
-    street: this.createOrderFormObject(
+    street: createOrderFormObject(
       'input', 'Street', 'text',
       { required: true }),
-    postalCode: this.createOrderFormObject(
+    postalCode: createOrderFormObject(
       'input', 'Postal Code', 'text',
       { required: true }),
-    email: this.createOrderFormObject(
+    email: createOrderFormObject(
       'input', 'Email', 'email',
       {
         required: true,
         isEmail: true
       })
-  }
-
-  checkRules = (value, rules) => {
-    if (rules.required) {
-      if (!value.length > 0) {
-        return false
-      }
-    }
-
-    if (rules.isEmail) {
-      // Make sure that the @ separates the domain and local-part and that the
-      // email doesn't end with an @
-      if (
-        value.match(/[^@]+/g).length !== 2 ||
-        value.charAt(value.length - 1) === '@') {
-        return false
-      }
-    }
-    // Passed on the rules, can return true
-    return true
   }
 
   handleOrder = async (event) => {
@@ -107,7 +76,7 @@ class Contact extends Component {
   handleChange = (event) => {
     const newDataState = {
       value: event.target.value,
-      valid: this.checkRules(
+      valid: checkRules(
         event.target.value,
         this.ORDER_FORM[event.target.name].rules
       ),
