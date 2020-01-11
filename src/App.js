@@ -5,7 +5,8 @@ import Layout from './hoc/Layout/Layout'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
 import Checkout from './containers/Checkout/Checkout'
 import Orders from './containers/Orders/Orders'
-import Auth from './containers/Auth/Auth'
+import Auth, { PURPOSES } from './containers/Auth/Auth'
+import Logout from './containers/Auth/Logout/Logout'
 
 function App () {
   return (
@@ -14,7 +15,15 @@ function App () {
         <Route path='/' exact component={BurgerBuilder} />
         <Route path='/checkout' component={Checkout} />
         <Route path='/orders' exact component={Orders} />
-        <Route path='/Auth' exact component={Auth} />
+        <Route
+          path={'/' + PURPOSES.signIn} exact
+          render={(props) => <Auth {...props} formPurpose={PURPOSES.signIn} />}
+        />
+        <Route
+          path={'/' + PURPOSES.signUp} exact
+          render={(props) => <Auth {...props} formPurpose={PURPOSES.signUp} />}
+        />
+        <Route path='/logout' exact component={Logout} />
       </Layout>
     </BrowserRouter>
   )

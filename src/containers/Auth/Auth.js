@@ -20,8 +20,7 @@ class Auth extends Component {
   state = {
     email: { value: '', valid: false, shouldValidate: false },
     password: { value: '', valid: false, shouldValidate: false },
-    formValid: true,
-    formPurpose: PURPOSES.signIn
+    formValid: true
   }
 
   AUTH_FORM = {
@@ -57,7 +56,10 @@ class Auth extends Component {
     this.props.onAuth(
       this.state.email.value,
       this.state.password.value,
-      this.state.formPurpose)
+      this.props.formPurpose
+    )
+
+    this.props.history.push('/')
   }
 
   render = () => {
@@ -80,7 +82,7 @@ class Auth extends Component {
     }
 
     let buttonText = ''
-    if (this.state.formPurpose === PURPOSES.signIn) {
+    if (this.props.formPurpose === PURPOSES.signIn) {
       buttonText = 'Sign In'
     } else {
       buttonText = 'Sign Up'
